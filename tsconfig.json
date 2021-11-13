@@ -2,6 +2,16 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@agencycoda/mia-help-core": [
+        "dist/agencycoda/mia-help-core/agencycoda-mia-help-core",
+        "dist/agencycoda/mia-help-core"
+      ],
+      "@agencycoda/mia-help-editor": [
+        "dist/agencycoda/mia-help-editor/agencycoda-mia-help-editor",
+        "dist/agencycoda/mia-help-editor"
+      ]
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
