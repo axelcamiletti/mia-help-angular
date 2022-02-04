@@ -13,7 +13,7 @@
   "private": true,
   "dependencies": {
     "@agencycoda/mia-auth": "^13.1.0",
-    "@agencycoda/mia-category-core": "0.0.2",
+    "@agencycoda/mia-category-core": "0.0.3",
     "@agencycoda/mia-core": "^13.1.0",
     "@agencycoda/mia-form": "^13.1.0",
     "@agencycoda/mia-layout": "^0.0.10",
