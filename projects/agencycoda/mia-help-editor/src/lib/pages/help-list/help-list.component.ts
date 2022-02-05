@@ -5,6 +5,7 @@ import { MiaPageCrudComponent, MiaPageCrudConfig } from '@agencycoda/mia-layout'
 import { MiaColumn } from '@agencycoda/mia-table';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { HelpfulColumnComponent } from '../../columns/helpful-column/helpful-column.component';
 
 @Component({
   selector: 'lib-help-list',
@@ -52,8 +53,8 @@ export class HelpListComponent implements OnInit {
   }
 
   loadTableConfig() {
-    //this.config.tableConfig.query.addWith('user');
-    //this.config.tableConfig.query.addWith('categories');
+    this.config.tableConfig.query.addWith('category');
+    this.config.tableConfig.query.addWith('language');
 
     this.config.tableConfig.loadingColor = 'black';
     this.config.tableConfig.hasEmptyScreen = false;
@@ -62,6 +63,8 @@ export class HelpListComponent implements OnInit {
       { key: 'id', type: 'string', title: '#', field_key: 'id' },
       { key: 'title', type: 'string', title: 'Title', field_key: 'title' },
       { key: 'category', type: 'string', title: 'Category', field_key: ['category', 'title'] },
+      { key: 'helpful', type: 'custom', title: 'Helpful', extra: { component: HelpfulColumnComponent } },
+      { key: 'language', type: 'string', title: 'Language', field_key: ['language', 'title'] },
       { key: 'visibility', type: 'icon-toggle', title: '', field_key: 'status', extra: {
         key_action: 'click-lock',
         options: [
