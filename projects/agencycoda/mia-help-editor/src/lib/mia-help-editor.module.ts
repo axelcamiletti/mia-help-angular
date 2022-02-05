@@ -1,16 +1,22 @@
 import { NgModule } from '@angular/core';
-import { MiaHelpEditorComponent } from './mia-help-editor.component';
 
+// Agency Coda Libraries
+import { MiaLayoutModule } from '@agencycoda/mia-layout';
+
+// Components
+import { HelpListComponent } from './pages/help-list/help-list.component';
 
 
 @NgModule({
   declarations: [
-    MiaHelpEditorComponent
+    HelpListComponent
   ],
   imports: [
+    // Agency Coda Libraries
+    MiaLayoutModule
   ],
   exports: [
-    MiaHelpEditorComponent
+    
   ]
 })
 export class MiaHelpEditorModule { }
