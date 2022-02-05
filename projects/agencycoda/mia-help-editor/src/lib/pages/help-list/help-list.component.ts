@@ -32,9 +32,8 @@ export class HelpListComponent implements OnInit {
   onSearch(text: string) {
     this.config.tableConfig.query.resetWhere();
     if(text.length > 2){
-      this.config.tableConfig.query.addWhereLikes(['firstname', 'lastname'], text);
+      this.config.tableConfig.query.addWhereLikes(['title'], text);
     }
-    console.log(this.pageComp);
     this.pageComp.loadItems();
   }
 
@@ -49,7 +48,14 @@ export class HelpListComponent implements OnInit {
       this.pageComp.onClickRemove(action.item);
     } else if(action.key == 'see'){
       this.navigator.navigateByUrl('/team/profile/' + action.item.id);
+    } else if(action.key == 'click-status') {
+      this.saveNewStatus(action.item, action.item.status == 1 ? 0 : 1);
     }
+  }
+
+  saveNewStatus(item: MiaHelp, newStatus: number) {
+    item.status = newStatus;
+    this.helpService.saveOb(item).subscribe();
   }
 
   loadTableConfig() {
@@ -66,7 +72,7 @@ export class HelpListComponent implements OnInit {
       { key: 'helpful', type: 'custom', title: 'Helpful', extra: { component: HelpfulColumnComponent } },
       { key: 'language', type: 'string', title: 'Language', field_key: ['language', 'title'] },
       { key: 'visibility', type: 'icon-toggle', title: '', field_key: 'status', extra: {
-        key_action: 'click-lock',
+        key_action: 'click-status',
         options: [
           { value: 0, color: '#333', icon: 'visibility-off' },
           { value: 1, color: 'blue', icon: 'visibility' },
@@ -84,8 +90,8 @@ export class HelpListComponent implements OnInit {
   loadConfig() {
     this.config.title = 'Help Center';
 
-    this.config.buttons.push({ key: 'organize', title: 'Organize', icon: 'edit' });
-    this.config.buttons.push({ key: 'add', title: 'New video', icon: 'edit' });
+    this.config.buttons.push({ key: 'organize', title: 'Organize' });
+    this.config.buttons.push({ key: 'add', title: 'Add new Item' });
 
     this.loadTableConfig();
     //this.loadFormConfig();

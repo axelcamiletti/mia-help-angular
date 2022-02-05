@@ -11,4 +11,7 @@ export class HelpfulColumnComponent extends BaseColumnComponent implements OnIni
   ngOnInit(): void {
   }
 
+  getTotal() {
+    return this.item.likes + this.item.dislikes;
+  }
 }
