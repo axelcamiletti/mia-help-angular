@@ -11,6 +11,7 @@
  * Pages
  */
  export * from './lib/pages/help-list/help-list.component';
+ export * from './lib/pages/new-item-help/new-item-help.component';
 
 /**
  * Modules

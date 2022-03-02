@@ -40,15 +40,13 @@ export class HelpListComponent implements OnInit {
 
   onAction(action: {key: string; item: any;}) {
     if(action.key == 'add'){
-      this.pageComp.openForm(new MiaHelp()).pipe(nil()).subscribe(result => this.pageComp.loadItems());
+      this.navigator.navigateByUrl('/help/new-item');
     } else if (action.key == 'search') {
       this.onSearch(action.item);
     } else if(action.key == 'edit'){
-      this.pageComp.openForm(action.item).pipe(nil()).subscribe(result => this.pageComp.loadItems());
+      this.navigator.navigateByUrl('/help/new-item/' + action.item.id);
     } else if(action.key == 'remove'){
       this.pageComp.onClickRemove(action.item);
-    } else if(action.key == 'see'){
-      this.navigator.navigateByUrl('/team/profile/' + action.item.id);
     } else if(action.key == 'click-status') {
       this.saveNewStatus(action.item, action.item.status == 1 ? 0 : 1);
     } else if(action.key == 'organize') {

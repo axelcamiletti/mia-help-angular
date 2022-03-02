@@ -6,12 +6,14 @@ import { MiaLayoutModule } from '@agencycoda/mia-layout';
 // Components
 import { HelpListComponent } from './pages/help-list/help-list.component';
 import { HelpfulColumnComponent } from './columns/helpful-column/helpful-column.component';
+import { NewItemHelpComponent } from './pages/new-item-help/new-item-help.component';
 
 
 @NgModule({
   declarations: [
     HelpListComponent,
-    HelpfulColumnComponent
+    HelpfulColumnComponent,
+    NewItemHelpComponent
   ],
   imports: [
     // Agency Coda Libraries
@@ -19,7 +21,8 @@ import { HelpfulColumnComponent } from './columns/helpful-column/helpful-column.
   ],
   exports: [
     HelpListComponent,
-    HelpfulColumnComponent
+    HelpfulColumnComponent,
+    NewItemHelpComponent
   ]
 })
 export class MiaHelpEditorModule { }
