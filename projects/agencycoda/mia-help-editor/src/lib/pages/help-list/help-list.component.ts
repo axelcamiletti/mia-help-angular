@@ -1,4 +1,5 @@
 import { MiaCategoryService } from '@agencycoda/mia-category-core';
+import { MiaCategoryModalService } from '@agencycoda/mia-category-editor';
 import { MiaQuery, nil } from '@agencycoda/mia-core';
 import { MiaHelp, MiaHelpService } from '@agencycoda/mia-help-core';
 import { MiaPageCrudComponent, MiaPageCrudConfig } from '@agencycoda/mia-layout';
@@ -20,7 +21,7 @@ export class HelpListComponent implements OnInit {
 
   constructor(
     protected helpService: MiaHelpService,
-    //protected categoryModal: MiaCategoryModalService,
+    protected categoryModal: MiaCategoryModalService,
     //protected categoryService: MiaCategoryService,
     protected navigator: Router
   ) { }
@@ -50,6 +51,8 @@ export class HelpListComponent implements OnInit {
       this.navigator.navigateByUrl('/team/profile/' + action.item.id);
     } else if(action.key == 'click-status') {
       this.saveNewStatus(action.item, action.item.status == 1 ? 0 : 1);
+    } else if(action.key == 'organize') {
+      this.categoryModal.openOrganize(1);
     }
   }
 
