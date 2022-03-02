@@ -7,6 +7,10 @@ import { MiaLayoutModule } from '@agencycoda/mia-layout';
 import { HelpListComponent } from './pages/help-list/help-list.component';
 import { HelpfulColumnComponent } from './columns/helpful-column/helpful-column.component';
 import { NewItemHelpComponent } from './pages/new-item-help/new-item-help.component';
+import { MiaFormModule } from '@agencycoda/mia-form';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -16,8 +20,16 @@ import { NewItemHelpComponent } from './pages/new-item-help/new-item-help.compon
     NewItemHelpComponent
   ],
   imports: [
+    // Angular Libraries
+    CommonModule,
+    FormsModule,
+
+    // Angular Materia
+    MatIconModule,
+
     // Agency Coda Libraries
-    MiaLayoutModule
+    MiaLayoutModule,
+    MiaFormModule
   ],
   exports: [
     HelpListComponent,

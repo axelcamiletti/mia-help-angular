@@ -17,6 +17,7 @@
     "@agencycoda/mia-category-editor": "^13.1.1",
     "@agencycoda/mia-core": "^13.1.0",
     "@agencycoda/mia-form": "^13.1.0",
+    "@agencycoda/mia-language-core": "^13.1.0",
     "@agencycoda/mia-layout": "^0.0.10",
     "@agencycoda/mia-loading": "^13.1.0",
     "@agencycoda/mia-table": "^13.1.0",
