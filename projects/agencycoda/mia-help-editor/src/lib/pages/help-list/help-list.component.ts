@@ -80,8 +80,8 @@ export class HelpListComponent implements OnInit {
       } },
       { key: 'more', type: 'more', title: '', extra: {
         actions: [
-          { icon: 'create', title: 'Editar', key: 'edit' },
-          { icon: 'delete', title: 'Borrar', key: 'remove' },
+          { icon: 'create', title: 'Edit', key: 'edit' },
+          { icon: 'delete', title: 'Delete', key: 'remove' },
         ]
       } }
     ];
