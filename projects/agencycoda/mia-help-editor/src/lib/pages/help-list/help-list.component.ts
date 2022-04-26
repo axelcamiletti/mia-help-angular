@@ -1,7 +1,9 @@
 import { MiaCategoryService } from '@agencycoda/mia-category-core';
 import { MiaCategoryModalService } from '@agencycoda/mia-category-editor';
 import { MiaQuery, nil } from '@agencycoda/mia-core';
+import { MiaField, MiaFormConfig } from '@agencycoda/mia-form';
 import { MiaHelp, MiaHelpService } from '@agencycoda/mia-help-core';
+import { MiaLanguageService } from '@agencycoda/mia-language-core';
 import { MiaPageCrudComponent, MiaPageCrudConfig } from '@agencycoda/mia-layout';
 import { MiaColumn } from '@agencycoda/mia-table';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -22,7 +24,8 @@ export class HelpListComponent implements OnInit {
   constructor(
     protected helpService: MiaHelpService,
     protected categoryModal: MiaCategoryModalService,
-    //protected categoryService: MiaCategoryService,
+    protected languageService: MiaLanguageService,
+    protected categoryService: MiaCategoryService,
     protected navigator: Router
   ) { }
 
@@ -40,11 +43,13 @@ export class HelpListComponent implements OnInit {
 
   onAction(action: {key: string; item: any;}) {
     if(action.key == 'add'){
-      this.navigator.navigateByUrl('/help/new-item');
+      //this.navigator.navigateByUrl('/help/new-item');
+      this.pageComp.openForm(new MiaHelp()).pipe(nil()).subscribe(result => this.pageComp.loadItems());
     } else if (action.key == 'search') {
       this.onSearch(action.item);
     } else if(action.key == 'edit'){
-      this.navigator.navigateByUrl('/help/new-item/' + action.item.id);
+      this.pageComp.openForm(action.item).pipe(nil()).subscribe(result => this.pageComp.loadItems());
+      //this.navigator.navigateByUrl('/help/new-item/' + action.item.id);
     } else if(action.key == 'remove'){
       this.pageComp.onClickRemove(action.item);
     } else if(action.key == 'click-status') {
@@ -88,13 +93,36 @@ export class HelpListComponent implements OnInit {
     ];
   }
 
+  loadFormConfig() {
+    this.config.formConfig.titleNew = 'Add new item';
+    this.config.formConfig.titleEdit = 'Edit item';
+    this.config.formConfig.service = this.helpService;
+    this.config.formConfig.config = new MiaFormConfig();
+    this.config.formConfig.config.hasSubmit = false;
+    this.config.formConfig.config.fields = [
+      { key: 'language_id', type: MiaField.TYPE_SELECT_SERVICE, label: 'Lenguaje', extra: { service: this.languageService, field_display: 'title', field_list: 'language-auto', query: new MiaQuery() } },
+      { key: 'category_id', type: MiaField.TYPE_SELECT_SERVICE, label: 'Categoría', extra: { service: this.categoryService, field_display: 'title', field_list: 'category-auto', query: new MiaQuery() } },
+      { key: 'title', type: MiaField.TYPE_STRING, label: 'Titulo' },
+      { key: 'content', type: MiaField.TYPE_HTML, label: 'Contenido' },
+      { key: 'status', type: MiaField.TYPE_SELECT, label: 'Estado', extra: {
+        options: [
+          { id: 0, title: 'Inactivo' },
+          { id: 1, title: 'Activo' },
+        ]
+      }},
+    ];
+    this.config.formConfig.config.errorMessages = [
+      { key: 'required', message: 'The "%label%" is required.' }
+    ];
+  }
+
   loadConfig() {
     this.config.title = 'Help Center';
 
-    this.config.buttons.push({ key: 'organize', title: 'Organize' });
+    //this.config.buttons.push({ key: 'organize', title: 'Organize' });
     this.config.buttons.push({ key: 'add', title: 'Add new Item' });
 
     this.loadTableConfig();
-    //this.loadFormConfig();
+    this.loadFormConfig();
   }
 }
