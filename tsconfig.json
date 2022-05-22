@@ -10,6 +10,10 @@
       "@agencycoda/mia-help-editor": [
         "dist/agencycoda/mia-help-editor/agencycoda-mia-help-editor",
         "dist/agencycoda/mia-help-editor"
+      ],
+      "@agencycoda/mia-help-viewer": [
+        "dist/agencycoda/mia-help-viewer/agencycoda-mia-help-viewer",
+        "dist/agencycoda/mia-help-viewer"
       ]
     },
     "baseUrl": "./",

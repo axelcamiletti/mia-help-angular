@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "build2": "ng build --prod --project=@agencycoda/mia-help-core && cd dist/agencycoda/mia-help-core/ && npm publish",
     "build3": "ng build --prod --project=@agencycoda/mia-help-editor && cd dist/agencycoda/mia-help-editor/ && npm publish",
+    "build4": "ng build --prod --project=@agencycoda/mia-help-viewer && cd dist/agencycoda/mia-help-viewer/ && npm publish --access public",
     "test": "ng test"
   },
   "private": true,
