@@ -7,7 +7,8 @@ import { MiaLanguageService } from '@agencycoda/mia-language-core';
 import { MiaPageCrudComponent, MiaPageCrudConfig } from '@agencycoda/mia-layout';
 import { MiaColumn } from '@agencycoda/mia-table';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 import { HelpfulColumnComponent } from '../../columns/helpful-column/helpful-column.component';
 
 @Component({
@@ -21,7 +22,10 @@ export class HelpListComponent implements OnInit {
 
   config = new MiaPageCrudConfig();
 
+  lang = 'en';
+
   constructor(
+    protected route: ActivatedRoute,
     protected helpService: MiaHelpService,
     protected categoryModal: MiaCategoryModalService,
     protected languageService: MiaLanguageService,
@@ -30,7 +34,7 @@ export class HelpListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadConfig();
+    this.loadParams();
   }
 
   onSearch(text: string) {
@@ -73,10 +77,10 @@ export class HelpListComponent implements OnInit {
     this.config.tableConfig.service = this.helpService;
     this.config.tableConfig.columns = [
       { key: 'id', type: 'string', title: '#', field_key: 'id' },
-      { key: 'title', type: 'string', title: 'Title', field_key: 'title' },
-      { key: 'category', type: 'string', title: 'Category', field_key: ['category', 'title'] },
-      { key: 'helpful', type: 'custom', title: 'Helpful', extra: { component: HelpfulColumnComponent } },
-      { key: 'language', type: 'string', title: 'Language', field_key: ['language', 'title'] },
+      { key: 'title', type: 'string', title: this.lang == 'es' ? 'Titulo' : 'Title', field_key: 'title' },
+      { key: 'category', type: 'string', title: this.lang == 'es' ? 'Categoría' : 'Category', field_key: ['category', 'title'] },
+      { key: 'helpful', type: 'custom', title: this.lang == 'es' ? 'Util' : 'Helpful', extra: { component: HelpfulColumnComponent } },
+      { key: 'language', type: 'string', title: this.lang == 'es' ? 'Idioma' : 'Language', field_key: ['language', 'title'] },
       { key: 'visibility', type: 'icon-toggle', title: '', field_key: 'status', extra: {
         key_action: 'click-status',
         options: [
@@ -86,43 +90,52 @@ export class HelpListComponent implements OnInit {
       } },
       { key: 'more', type: 'more', title: '', extra: {
         actions: [
-          { icon: 'create', title: 'Edit', key: 'edit' },
-          { icon: 'delete', title: 'Delete', key: 'remove' },
+          { icon: 'create', title: this.lang == 'es' ? 'Editar' : 'Edit', key: 'edit' },
+          { icon: 'delete', title: this.lang == 'es' ? 'Eliminar' : 'Delete', key: 'remove' },
         ]
       } }
     ];
   }
 
   loadFormConfig() {
-    this.config.formConfig.titleNew = 'Add new item';
-    this.config.formConfig.titleEdit = 'Edit item';
+    this.config.formConfig.titleNew = this.lang == 'es' ? 'Agregar item' : 'Add new item';
+    this.config.formConfig.titleEdit = this.lang == 'es' ? 'Editar' : 'Edit item';
     this.config.formConfig.service = this.helpService;
     this.config.formConfig.config = new MiaFormConfig();
     this.config.formConfig.config.hasSubmit = false;
     this.config.formConfig.config.fields = [
-      { key: 'language_id', type: MiaField.TYPE_SELECT_SERVICE, label: 'Lenguaje', extra: { service: this.languageService, field_display: 'title', field_list: 'language-auto', query: new MiaQuery() } },
-      { key: 'category_id', type: MiaField.TYPE_SELECT_SERVICE, label: 'Categoría', extra: { service: this.categoryService, field_display: 'title', field_list: 'category-auto', query: new MiaQuery() } },
-      { key: 'title', type: MiaField.TYPE_STRING, label: 'Titulo' },
-      { key: 'content', type: MiaField.TYPE_HTML, label: 'Contenido' },
-      { key: 'status', type: MiaField.TYPE_SELECT, label: 'Estado', extra: {
+      { key: 'language_id', type: MiaField.TYPE_SELECT_SERVICE, label: this.lang == 'es' ? 'Idioma' : 'Languaje', extra: { service: this.languageService, field_display: 'title', field_list: 'language-auto', query: new MiaQuery() } },
+      { key: 'category_id', type: MiaField.TYPE_SELECT_SERVICE, label: this.lang == 'es' ? 'Categoria' : 'Category', extra: { service: this.categoryService, field_display: 'title', field_list: 'category-auto', query: new MiaQuery() } },
+      { key: 'title', type: MiaField.TYPE_STRING, label: this.lang == 'es' ? 'Titulo' : 'Title' },
+      { key: 'content', type: MiaField.TYPE_HTML, label: this.lang == 'es' ? 'Contenido' : 'Content' },
+      { key: 'status', type: MiaField.TYPE_SELECT, label: this.lang == 'es' ? 'Estado' : 'Status', extra: {
         options: [
-          { id: 0, title: 'Inactivo' },
-          { id: 1, title: 'Activo' },
+          { id: 0, title: this.lang == 'es' ? 'Inactivo' : 'Inactive' },
+          { id: 1, title: this.lang == 'es' ? 'Activo' : 'Active' },
         ]
       }},
     ];
     this.config.formConfig.config.errorMessages = [
-      { key: 'required', message: 'The "%label%" is required.' }
+      { key: 'required', message: this.lang == 'es' ? 'El "%label%" es requerido.' : 'The "%label%" is required.' }
     ];
   }
 
   loadConfig() {
-    this.config.title = 'Help Center';
+    this.config.title = this.lang == 'es' ? 'Centro de Ayuda' : 'Help Center';
 
     //this.config.buttons.push({ key: 'organize', title: 'Organize' });
-    this.config.buttons.push({ key: 'add', title: 'Add new Item' });
+    this.config.buttons.push({ key: 'add', title: this.lang == 'es' ? 'Agregar' : 'Add new Item' });
 
     this.loadTableConfig();
     this.loadFormConfig();
+  }
+
+  loadParams() {
+    this.route.data.pipe(tap(params => {
+      if(params && params['lang']){
+        this.lang = params['lang'];
+      }
+    }))
+    .subscribe(res => this.loadConfig());
   }
 }
